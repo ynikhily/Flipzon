@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlipZon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+arr = {{inventory_arr|safe}}
+function myFunction() {
+  var x = document.getElementById("item").value;
+  var units = document.getElementById("quantity").value;
+  for (let i=0; i<arr.length; i++){
+  if (x==arr[i]["model_number"]){
+    var price = Number(arr[i]["price"])* Number(units);
+    break;
+  }
+  }
+  document.getElementById("price").setAttribute("value", price);
+}
+</script>
+</head>
+<body>
+<h5>Order Number: {{order_number}} </h5>
+<br>
+<form action="" method = "post">
+<div class = "container">
+    <h5>Items</h5>
+    <hr>
+    <div class="row">
+        <label for = "item" class="col-md-6"><strong>Item</strong></label>
+        <label for = "quantity" class="col-md-3"><strong>Quantity</strong></label>
+        <label for = "price" class="col-md-3"><strong>Price</strong></label>
+
+    </div>
+    <hr>
+    <div class="row gy-2 gx-3 align-items-center">
+        <div class = "col-md-6">
+        <select class="form-control" name="item" id="item">
+            {% for item in inventory_arr %}
+            <option value="{{item['model_number']}}">{{item['model_number']}}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div class = "col-md-3">
+            <input class="form-control" name="quantity" type="text" id="quantity" onchange="myFunction()">
+        </div>
+        <div class="col-md-3">
+        <input class = "form-control" name="price" type="text" id="price" readonly>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class = "mb-3">
+        <label for="customer_name" class="form-label"><h5>Customer Name</h5></label>
+        <input id="customer_name" name ="customer_name" class="form-control" type="text">
+        </div>
+    <div class="mb-3">
+        <label class="form-label" for="customer_address"><h5>Customer Address</h5></label>
+        <input class="form-control" name ="customer_address" id="customer_address" type="text">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="distance"><h5>Distance(km)</h5></label>
+        <input class="form-control" name="distance" id="distance" type="text">
+    </div>
+    <div class="mb-3">
+        <input type="submit" value="Place Order" class="btn btn-primary">
+    </div>
+</div>
+</form>
+</body>
+</html>
